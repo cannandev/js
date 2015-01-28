@@ -1,3 +1,7 @@
 # minified js files #
 #####################
 min/
+
+# php files #
+#############
+*.php
