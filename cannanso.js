@@ -1,34 +1,33 @@
  // custom js for cannanso.com
 
-function slideShow() {
-	var active = $('#testimonials .active');
-	var next = active.next().length ? active.next() : active.siblings('.item').first();
+var slideItem = function() {
+ 	$('#testimonials .next').click(function(){
+ 		var activeItem = $('#testimonials .active');
+ 		var nextItem = activeItem.next();
 
-	next.fadeIn().addClass('active');
-	active.fadeOut().removeClass('active');
+ 		if(nextItem.length === 0) {
+ 			nextItem = $('.item').first();
+ 		}
 
-//	setInterval( slideShow, 5000 );
-}
+ 		activeItem.fadeOut(600).removeClass('active');
+ 		nextItem.fadeIn(600).addClass('active');
+ 	});
 
-function posLightboxImg() {
-	// displays image in the center of screen
-	var top = ($(window).height() - $('#lightbox').height()) / 2;
-	var left = ($(window).width() - $('#lightbox').width()) / 2;
-	$('#lightbox')
-		.css('top', top)
-		.css('left', left)
-		.fadeIn();
-}
+ 	$('#testimonials .prev').click(function(){
+ 		var activeItem = $('#testimonials .active');
+ 		var prevItem = activeItem.prev();
 
-function removeLightbox() {
-	$('#lb-overlay, #lightbox').fadeOut('slow', function() {
-		$(this).remove();
-		$('body').css('overflow-y', 'auto'); // show scrollbars
-	});
-}
+ 		if(prevItem.length === 0) {
+ 			prevItem = $('.item').last();
+ 		}
 
-$(document).ready(function(){
+ 		activeItem.fadeOut(600).removeClass('active');
+ 		prevItem.fadeIn(600).addClass('active');
+ 	}); 	
 
+};
+
+var stickyNav = function() {
 	var win = $(window), 
 		nav = $('.page-home header'),
 		navBarHeight = nav.outerHeight()+1,
@@ -70,34 +69,35 @@ $(document).ready(function(){
 		}, 800);
 		e.preventDefault();
 	});	
+};
 
-	//scroll-to-top link
+var scrollTop = function() {
 	$('.top-link').click(function(e){
 		$('html, body').animate({
 			scrollTop: 0
 		}, 'slow');
 		e.preventDefault();
 	});
+};
 
-	//testimonal slideshow
-	/* Since absolute positioning each item removes it from the DOM, 
-	 give a flexible height to the wrapper. */
-	var itemHeight = $('#testimonials .item').outerHeight();
-	$('#testimonials .wrapper').css('height', itemHeight); 
+var posLightboxImg = function() {
+	// displays image in the center of screen
+	var top = ($(window).height() - $('#lightbox').height()) / 2;
+	var left = ($(window).width() - $('#lightbox').width()) / 2;
+	$('#lightbox')
+		.css('top', top)
+		.css('left', left)
+		.fadeIn();
+};
 
-	$('#testimonials a[role=button]').click(function(e){
-		slideShow();
-		e.preventDefault();
+var removeLightbox = function() {
+	$('#lb-overlay, #lightbox').fadeOut('slow', function() {
+		$(this).remove();
+		$('body').css('overflow-y', 'auto'); // show scrollbars
 	});
+};
 
-	//portfolio carousel
-	$('.owl-carousel').owlCarousel({
-    items : 3,
-    autoPlay : 4000,
-    stopOnHover : true,
-	});
-
-	//portfolio thumb overlay
+var portThumbs = function() {
 	$('#portfolio .thumb').hover(
 		function() {
 			$(this).find('.tb-overlay').fadeIn();
@@ -105,8 +105,9 @@ $(document).ready(function(){
 		function() {
 			$(this).find('.tb-overlay').fadeOut();
 	});
+};
 
-	//portfolio lightbox
+var portLightbox = function() {
 	$('.preview').click(function() {
 		$('body').css('overflow-y', 'hidden'); // hide scrollbars
 
@@ -136,21 +137,9 @@ $(document).ready(function(){
 
 		return false;
 	});	
+};
 
-	//contact form placeholder fix for IE
-	// $('[placeholder]').focus(function() {
-	//   var input = $(this);
-	//   if (input.val() === input.attr('placeholder')) {
-	//     input.val('');
-	//   }
-	// }).blur(function() {
-	//   var input = $(this);
-	//   if (input.val() === '' || input.val() === input.attr('placeholder')) {
-	//     input.val(input.attr('placeholder'));
-	//   }
-	// }).blur();	
-
-	//contact form validation
+var contactVal = function() {
 	$('#contact form').on('submit', function() {		
 		$('.form-control').each(function() {
 			if (!$(this).val().length) {
@@ -163,20 +152,31 @@ $(document).ready(function(){
 			}
 		});	
 	});
+};
 
-	//toggle open/close
-	// $('.toggle').click(function(){
-	// 	if($('#contact').is(':hidden')) {
-	// 		$('#contact').slideDown('slow');
-	// 	}
-	// 	else {
-	// 		$('#contact').slideUp('slow');
-	// 	}
-	// });
+$(document).ready(function(){
+
+	slideItem();
+	stickyNav();
+	scrollTop();
+	portThumbs();
+	portLightbox();
+	contactVal();
+
+	//testimonal slideshow
+	/* Since absolute positioning each item removes it from the DOM, 
+	 give a flexible height to the wrapper. */
+	var itemHeight = $('#testimonials .item').outerHeight();
+	$('#testimonials .wrapper').css('height', itemHeight); 
+
+	//portfolio carousel
+	$('.owl-carousel').owlCarousel({
+    items : 3,
+    autoPlay : 2000,
+    stopOnHover : true,
+	});
 
 	//portfolio page animations
 	$('.page-portfolio').hide(0).delay(400).fadeIn('slow');
 
-
-}); //document.ready()
-
+});
