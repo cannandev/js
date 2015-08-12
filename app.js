@@ -1,3 +1,5 @@
+/* Tutorial at https://scotch.io/tutorials/angularjs-form-validation */
+
 // define angular module/app
 var formApp = angular.module('formApp', []);
 
@@ -8,7 +10,7 @@ function formController($scope, $http) {
 	$scope.processForm = function() {
 		$http({
 			method	: 'POST',
-			url			: 'process.php',
+			url			: '../process.php',
 			data 		: $.param($scope.formData),
 			headers : {'Content-Type': 'application/x-www-form-urlencoded'},
 		})
