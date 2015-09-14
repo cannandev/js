@@ -69,6 +69,18 @@ var stickyNav = function() {
 		}, 800);
 		e.preventDefault();
 	});	
+
+	var introButton = $('#intro .more');
+	introButton.click(function(e) {
+		var offsetTop = $("#portfolio").offset().top - navBarHeight+1;
+		$('html, body').stop().animate({ 
+			scrollTop: offsetTop
+		}, 800);		
+		e.preventDefault();
+	});
+
+	var introStrike = $('#intro i');
+	$(introStrike).after('<span>line of code</span>');
 };
 
 var scrollTop = function() {
