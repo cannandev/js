@@ -109,14 +109,26 @@ var removeLightbox = function() {
 	});
 };
 
-var portThumbs = function() {
-	$('#portfolio .thumb').hover(
+// var portThumbs = function() {
+// 	$('#portfolio .thumb').hover(
+// 		function() {
+// 			$(this).find('.tb-overlay').fadeIn();
+// 		}, 
+// 		function() {
+// 			$(this).find('.tb-overlay').fadeOut();
+// 	});
+// };
+
+var portCells = function() {
+	$(".grid-cell img").hover(
 		function() {
-			$(this).find('.tb-overlay').fadeIn();
+			$(this).next('.caption').slideDown('fast');
+			$(this).animate({marginTop:'-78px', marginBottom: '78px'}, 100);			
 		}, 
 		function() {
-			$(this).find('.tb-overlay').fadeOut();
-	});
+			$(this).next('.caption').slideUp('slow');
+			$(this).animate({marginTop:'0', marginBottom: '0'}, 100);
+		});
 };
 
 var portLightbox = function() {
@@ -171,7 +183,7 @@ $(document).ready(function(){
 	slideItem();
 	stickyNav();
 	scrollTop();
-	portThumbs();
+	portCells();
 	portLightbox();
 	contactVal();
 
@@ -179,14 +191,7 @@ $(document).ready(function(){
 	/* Since absolute positioning each item removes it from the DOM, 
 	 give a flexible height to the wrapper. */
 	var itemHeight = $('#testimonials .item').outerHeight();
-	$('#testimonials .wrapper').css('height', itemHeight); 
-
-	//portfolio carousel
-	$('.owl-carousel').owlCarousel({
-    items : 3,
-    autoPlay : 2000,
-    stopOnHover : true,
-	});
+	$('#testimonials .wrapper').css('height', itemHeight);
 
 	//portfolio page animations
 	$('.page-portfolio').hide(0).delay(400).fadeIn('slow');
