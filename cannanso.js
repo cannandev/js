@@ -120,15 +120,19 @@ var removeLightbox = function() {
 // };
 
 var portCells = function() {
-	$(".grid-cell img").hover(
+	$(".grid-cell").hover(
 		function() {
-			$(this).next('.caption').slideDown('fast');
-			$(this).animate({marginTop:'-78px', marginBottom: '78px'}, 100);			
+			$(this).children('.caption').slideDown('fast');
+			$(this).children('img').animate({marginTop:'-78px', marginBottom: '78px'}, 100);			
 		}, 
 		function() {
-			$(this).next('.caption').slideUp('slow');
-			$(this).animate({marginTop:'0', marginBottom: '0'}, 100);
+			$(this).children('.caption').slideUp('slow');
+			$(this).children('img').animate({marginTop:'0', marginBottom: '0'}, 100);
 		});
+	$(".grid-cell").click(function(){
+		var link = $(this).children('.caption').attr('href');
+		window.location = link;
+	});
 };
 
 var portLightbox = function() {
